@@ -1,0 +1,121 @@
+<!DOCTYPE html> 
+<html> 
+  <style type="text/css"> 
+    body  {
+    margin: 0; 
+    padding: 0;
+    text-align: center;
+    }
+    div.container { 
+    width: 800px; 
+    margin: 0 auto;
+    text-align: justify;
+    }
+    .teaser_vid {
+    border:2px solid gray;
+    width: 800px; 
+    margin: 0 auto;
+    text-align: center;
+    }
+
+    #title{
+    font-family: Gill Sans, Verdana;
+    font-size: 11px;
+    line-height: 14px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+    color: #444;
+    } 
+    div.container p {
+    font-family: Times New Roman,  times,times-roman, georgia, serif;
+    font-size: 16px;
+    line-height: 20px;
+    color: #444;
+    }
+
+    div.container h2 {
+    font-family: times, Times New Roman, times-roman, georgia, serif;
+    font-size: 28px;
+    line-height: 40px;
+    letter-spacing: -1px;color: #444;
+    }
+
+    div.container h3 {
+    font-family: times, Times New Roman, times-roman, georgia, serif;
+    font-size: 18px;
+    line-height: 20px;
+    letter-spacing: -1px;color: #444;
+    }
+  </style>
+  <body> 
+
+    <div class="container">
+
+      <hr style="clear:both;"/>
+      <H1 style="text-align: center;">LIFT: Learned Invariant Feature Transform</H1>
+      <div id="title" style="text-align: center; font-size: 1em">K.M. Yi<sup>1,*</sup>, E. Trulls<sup>1,*</sup>, V. Lepetit<sup>2</sup>, P. Fua<sup>1</sup></div>
+      <br />
+      <div id="title" style="text-align: center; font-size: 1em">ECCV 2016</div>
+      <br />
+      <div style="text-align: center; font-size: 1em"><sup>1</sup> Computer Vision Laboratory, Ecole Polytechnique Federale de Lausanne (EPFL)</div>
+      <div style="text-align: center; font-size: 1em"><sup>2</sup> Institute for Computer Graphics and Vision, Graz University of Technology</div>
+      <div style="text-align: center; font-size: 0.8em">(*: equal contribution)</div>
+      <hr style="clear:both;"/>
+
+      <div id="title">Teaser video:</div>
+      <p> This teaser video shows  feature matching results with our integrated
+	LIFT      pipeline       and      SIFT&nbsp[<b><span      style="color:
+	#00ff00">1</span></b>], for selected sequences of all three datasets,
+	<i>Strecha</i>,  <i>DTU</i>,   and  <i>Webcam</i>.   Our   results  are
+	significantly  better overall  compared  to SIFT.   Note  that, in  our
+	experiments,  SIFT  still  gives  results  that are  on  par  with  the
+	state-of-the-art, in terms of the pipeline performance.  Please see the
+	paper for details.
+      </p>
+    </div>
+    <video class="teaser_vid" controls autoplay>
+      <source src="lift_supplementary_vid.mp4" type="video/mp4">
+  	Your browser does  not support HTML5 video.  To see  this video, please
+  	open lift_supplementary_vid.mp4  (see bellow  for details  on the
+  	codec to use).
+    </video>
+
+    <div class="container">
+      <hr style="clear:both;"/>
+      <div id="title">Supplementary material:</div>
+      <p>
+	Click   the  following   link  for   the  supplementary   appendix  for
+	implementation
+	details: <a href="lift_supplementary.pdf">lift_supplementary.pdf</a>
+      </p>
+      <p>
+	The video can be downloaded here: <a
+		href="lift_supplementary.mp4">lift_supplementary_vid.mp4</a>
+      </p>
+      <br>
+      <br>
+
+      <hr style="clear:both;"/>
+      <div id="title">Reference:</div>
+      <p style="text-indent:-25px; margin-left:25px; text-align: left;">
+	[<b><span                                                 style="color:
+	#00ff00">1</span></b>]&nbsp;&nbsp;D.  Lowe.  "Distinctive Image  Features
+	from Scale-Invariant Keypoints." IJCV, 20(2), 2004
+      </p>
+      <br>
+      <br>
+      
+      
+      <hr style="clear:both;"/>
+      <p style="text-align:center;">
+	The supplementary videos are encoded  by FFMPEG with h.264 codec. </br>
+	If  you  can't   play  the  video,  please  download   the  VLC  player
+	at: <a href="http://www.videolan.org/vlc/index.html">http://www.videolan.org/vlc/index.html</a>
+      </p>
+
+    </div>
+
+    
+  </body> 
+</html>

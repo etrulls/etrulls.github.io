@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Spatiotemporal descriptor for wide-baseline stereo reconstruction of non-rigid and ambiguous scenes</title>
+<meta http-equiv="content-language" content="en" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="keywords" content="eduard trulls, robotics, autonomous navigation, iri, Institut de Robòtica, computer vision, machine learning, stereo, appearance descriptors, sift" />
+<meta http-equiv="Pragma" content="no-cache" />
+<link rel="icon" type="image/png" href="http://www.iri.upc.edu/images/common/favicon.png" />
+<link rel="shortcut icon" href="http://www.iri.upc.edu/images/common/favicon.png" />
+
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+
+<!-- google fonts-->
+<!--<link href='http://fonts.googleapis.com/css?family=Gentium+Book+Basic' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css' />-->
+<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css' />
+
+<!-- analytics stuff -->
+<script type="text/javascript">
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-8343600-2']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+ var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ })();
+
+</script>
+</head>
+
+<body>
+
+<div class="clean"></div>
+
+<div id="content">
+	<!-- NAVIGATION LINKS -->
+	<div class="navigation-back"><a href="../../index.html">&lt;&nbsp; Go back</a></div>
+
+	<!-- TITLE AND AUTHORS -->
+	<div id="article_title">Spatiotemporal descriptor for wide-baseline stereo reconstruction of non-rigid and ambiguous scenes</div>
+
+	<div id="author_list">
+		<ul>
+			<li>E. Trulls<sup>1</sup>,</li>
+			<li>A. Sanfeliu<sup>1</sup>,</li>
+			<li>F. Moreno-Noguer<sup>1</sup></li>
+		</ul>
+	</div>
+
+	<i>European Conference on Computer Vision (ECCV)</i>, 2012<br />
+
+	<a href="../../pdf/trulls-eccv-2012.pdf">pdf</a> /
+	<a href="../../posters/eccv12.pdf">poster</a>
+
+	<div id="institutions_list">
+		<ul>
+			<li><sup>1</sup> Institut de Robòtica i Informàtica Industrial (Barcelona, Spain)</li>
+		</ul>
+	</div>
+
+	<p><b>Note: the code for this project is not "user-friendly" in its current state, but I'll put it up sometime. Ping me if you're interested.</b></p>
+
+	<p>Matching two sets of descriptors is usually performed by computing the distances between the possible correspondences, and then applying a global optimization algorithm (e.g. graph cuts) to enforce spatial consistency. This is the most common approach for stereo reconstruction, and similar procedures can be applied to object recognition or classification, or optical flow. But the problem can be <b>too challenging</b> in scenes with poor texture or repetitive patterns aligned with the epipolar geometry. In controlled settings, the correspondence problem can be further relaxed via structured-light patterns. Otherwise, more sophisticated descriptors need to be designed. In such situations we can attempt to incorporate <b>dynamic information</b> to further discriminate amongst possible matches.</p>
+
+	<p>Appearance descriptors based on histograms of gradient orientations, such as SIFT or Daisy [1], can be extended by computing histograms over the spacetime volume. Since the local temporal structure depends strongly on the camera view, most efforts in this direction have focused on monocular action recognition. For stereo reconstruction, spatiotemporal descriptors computed in this manner should be oriented according to the geometry of a particular setup. This approach was applied by <a href="http://www.cse.yorku.ca/vision/research/spatiotemporal-stereo-stequel.shtml">Sizintsev et al</a> (CVPR'09) to design the <b>stequel primitive</b> [2], which is applicable to short-baseline stereo.</p>
+
+	<p>We want to face the problem from a different angle. We have designed a <b>spatiotemporal approach to 3D stereo reconstruction applicable to wide-baseline stereo</b>, augmenting the 2D&mdash;i.e. spatial&mdash;descriptor with optical flow priors [4] instead of computing 3D&mdash;i.e. spatiotemporal&mdash;gradients or similar primitives. We intend to compute, for each camera, dense Daisy descriptors for a frame, and then extend them over time with optical flow priors, while discarding incorrect matches, effectively obtaining for every pixel a concatenation of spatial descriptors across different times. These descriptors can then be matched in the traditional manner, and a global optimization algorithm is applied over the spatiotemporal structure <b>to enforce spatial and temporal consistency</b>. The core idea behind our approach is to develop a primitive that captures the evolution of the spatial structure <b>around a feature point in time</b>, instead of trying to describe the spatiotemporal volume, as the latter cannot be generalized to wide-baseline due to the change of perspective and occlusions.</p>
+
+	<p>We construct our spatiotemporal descriptor in the following way. We use the spatial Daisy grid to compute the sub-descriptor over the feature point on the central frame. We then warp the grid by means of the optical flow priors, and compute a new sub-descriptor using the warped grid for each frame. We match each sub-descriptor computed with the warped grid against the sub-descriptor for the central frame, and discard it if the matching score falls above a certain threshold&mdash;this way we can validate the optical flow and discard a match if the patch suffers large transformations. The descriptor is assembled concatenating valid sub-descriptors.</p>
+
+	<div class="image">
+		<img src="img/spatiotemporal_descriptor.png" alt="Spatiotemporal descriptor" style="background-color: white; border:none; width:423px;" />
+		<p>Computation of the spatiotemporal descriptor with flow priors. Sub-descriptors outside the central frame are computed with the warped grid, and validated against the original frame.</p>
+	</div>
+
+	<p>We apply this descriptor to stereo, using a pair of calibrated monocular cameras. We compute descriptors along epipolar lines, using the calibration data to rotate the grid. We discretize 3D space, compute the depth for every possible correspondence and store the best match for every depth bin, building a hypercube of matching scores of size W x H x L x M, where W and H are the width and height of the image, L is the number of layers used to discretize 3D space and M is the number of consecutive frames under consideration (e.g. 5-7). We want to enforce piecewise-smoothness, which is NP-hard&mdash;we apply off-the-shelf Graph Cuts [3] with the distances as matching costs. To enforce spatiotemporal consistency we apply the smoothing function over space-time, linking each pixel (x,y,t) to its 4 adjacent neighbors over the spatial domain and the two pixels that share its spatial coordinates on two adjacent frames, (x,y,t-1) and (x,y,t+1).</p>
+
+	<div class="image">
+		<img src="img/spatiotemporal_gc.png" alt="Spatiotemporal regularization" style="background-color: white; border:none; width:491px;" />
+		<p>To perform spatiotemporal regularization, we apply graph cuts over a hypercube of costs (displayed here as a series of cubes). We set spatial and temporal pairwise relationships for the smoothness function. We discard the depth maps at either end of the buffer, to avoid singularities&mdash;note that we do not need to recompute the cost cubes.</p>
+	</div>
+
+	<p>The paper demonstrates the effectiveness of our approach against SIFT, Daisy and Stequel, for wide-baseline setups, on highly ambiguous data, and against image noise.</p>
+
+	<div class="video">
+		<p style="text-align: center; font-weight: bold;">Results for a real sequence</p>
+		<object type="application/x-shockwave-flash" style="width:600px; height:450px;" data="http://vimeo.com/moogaloop.swf?clip_id=88013087">
+			<param name="allowfullscreen" value="true" />
+			<param name="allowscriptaccess" value="always" />
+			<param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=88013087" />
+		</object>
+	</div>
+
+	<div class="video">
+		<p style="text-align: center; font-weight: bold;">Results for a synthetic sequence: noise</p>
+		<object type="application/x-shockwave-flash" style="width:600px; height:569px;" data="http://vimeo.com/moogaloop.swf?clip_id=88013085">
+			<param name="allowfullscreen" value="true" />
+			<param name="allowscriptaccess" value="always" />
+			<param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=88013085" />
+		</object>
+	</div>
+
+	<div class="video">
+		<p style="text-align: center; font-weight: bold;">Results for a synthetic sequence: baseline (1/2)</p>
+		<object type="application/x-shockwave-flash" style="width:600px; height:569px;" data="http://vimeo.com/moogaloop.swf?clip_id=88013084">
+			<param name="allowfullscreen" value="true" />
+			<param name="allowscriptaccess" value="always" />
+			<param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=88013084" />
+		</object>
+	</div>
+
+	<div class="video">
+		<p style="text-align: center; font-weight: bold;">Results for a synthetic sequence: baseline (2/2)</p>
+		<object type="application/x-shockwave-flash" style="width:600px; height:569px;" data="http://vimeo.com/moogaloop.swf?clip_id=88013086">
+			<param name="allowfullscreen" value="true" />
+			<param name="allowscriptaccess" value="always" />
+			<param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=88013086" />
+		</object>
+	</div>
+
+	<br />
+	<h2>References</h2>
+
+	<ul style="margin-left: 0; padding-left: 0; list-style-type:none;">
+		<li>[1] E. Tola, V. Lepetit, P. Fua. Daisy: An efficient dense descriptor applied to wide-baseline
+		stereo. T.PAMI, 2010.</li>
+		<li>[2] M. Sizintsev, R. Wildes. Spatiotemporal stereo via spatiotemporal quadric element (stequel)
+		matching. CVPR, 2009.</li>
+		<li>[3] Y. Boykov, O. Veksler, R. Zabih. Fast approximate energy minimization via graph cuts. T.
+		PAMI, 2001.</li>
+		<li>[4] C. Liu. Beyond pixels: Exploring new representations and applications for motion analysis.
+		PhD Thesis, 2009.</li>
+	</ul>
+
+</div>
+
+<div id="footer_spacer"></div>
+
+<div id="footer">
+	<div id="footer_contents">
+		<div id="footer_left">&nbsp;</div>
+		<div id="footer_right">
+		last updated: march 2014 &nbsp;/&nbsp;
+		<a href="../../index.html">home</a> &nbsp;/&nbsp;
+		<a href="http://validator.w3.org/check?uri=referer">validate</a>
+		</div>
+	<div class="clean"></div>
+	</div>
+</div>
+
+</body></html>

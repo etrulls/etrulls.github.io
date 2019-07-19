@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Autonomous Navigation for Mobile Service Robots in Urban Pedestrian Environments</title>
+<meta http-equiv="content-language" content="en" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="keywords" content="eduard trulls, robotics, autonomous navigation, iri, Institut de Robòtica, computer vision, machine learning, stereo, appearance descriptors, sift" />
+<meta http-equiv="Pragma" content="no-cache" />
+<link rel="icon" type="image/png" href="http://www.iri.upc.edu/images/common/favicon.png" />
+<link rel="shortcut icon" href="http://www.iri.upc.edu/images/common/favicon.png" />
+
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="../../css/style.css" />  
+
+<!-- google fonts-->
+<!--<link href='http://fonts.googleapis.com/css?family=Gentium+Book+Basic' rel='stylesheet' type='text/css' />
+	<link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css' />
+	<link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css' />
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css' />-->
+<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css' />
+
+<!-- analytics stuff -->
+<script type="text/javascript">
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-8343600-2']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+ var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ })();
+
+</script>
+</head>
+
+<body>
+
+<div class="clean"></div>
+
+<div id="content">
+	<!-- NAVIGATION LINKS -->
+	<div class="navigation-back"><a href="../../index.html">&lt;&nbsp; Go back</a></div>
+
+	<!-- TITLE AND AUTHORS -->
+	<div id="article_title">Autonomous Navigation for Mobile Service Robots in Urban Pedestrian Environments</div>
+
+	<div id="author_list">
+		<ul>
+			<li>E. Trulls<sup>1</sup>,</li>
+			<li>A. Corominas Murtra<sup>1</sup>,</li>
+			<li>J. Pérez-Ibarz<sup>1</sup>,</li>
+			<li>G. Ferrer-Minguez<sup>1</sup>,</li>
+			<li>D. Vasquez<sup>2</sup>,</li>
+			<li>J.M. Mirats-Tur<sup>3</sup>,</li>
+			<li>A. Sanfeliu<sup>1</sup></li>
+		</ul>
+	</div>
+
+	<i>Journal of Field Robotics (JFR)</i>, 2011<br />
+
+	<br />
+
+	<div id="institutions_list">
+		<ul>
+			<li><sup>1</sup> Institut de Robòtica i Informàtica Industrial (Barcelona, Spain)</li>
+			<li><sup>2</sup> Swiss Federal Institute of Technology (Zürich, Switzerland)</li>
+			<li><sup>3</sup> Cetaqua, Centro tecnológico del agua (Barcelona, Spain)</li>
+		</ul>
+	</div>
+
+	<!-- CONTENTS -->
+	<p>This paper presents a fully autonomous navigation solution for urban, pedestrian environments. This work was part of <a href="http://urus.upc.es">URUS</a> (Ubiquitous networking Robotics in Urban Settings (2006-2009), a EU STREP project whose main objective was the development of an adaptable network architecture to allow robots to perform tasks in urban areas. In order to do this we at IRI built two robots, based on Segway RMP200 platforms, and outfitted a large section of a University Campus as an experimental area for mobile robotics research. A basic requirement was to have the robots navigate the area robustly. Some pictures of the area can be seen below. Note the many variations in height (ramps, steps), small obstacles (bicycle stands, trashcans, glass windows and objects made of transparent plastic, and the ubiquitous presence of pedestrians.</p>
+
+	<div class="image">
+		<img src="img/campus_web.jpg" alt="IMAGE:CAMPUS" style="background-color: white; border:none;" />
+		<p>Experimental area at the UPC Campus Nord</p>
+	</div>
+
+	<p>The two-wheeled Segway RMP200 is a very interesting platform to build urban robots on, as it is highly mobile and yet very powerful, with nominal speeds over 4 m/s, a relatively small footprint and a payload around 50 kg (depending on the model). Even so, its self-balancing nature creates problems for its application in robotics. There is, on one hand, a perception issue: sensors such as cameras or laser scanners point higher or lower as the robot pitches forward and backward to gain or lose momentum. This is specially critical when 2D laser scanners at foot level, a very common solution for navigation and the one we adopted, point to the ground and sense "spurious" features or obstacles. On another hand there is a control issue, as the platform's control algorithm takes precedence over the operator's instructions, so that it is difficult or impossible to execute carefully planned trajectories with precision. Both problems are aggravated as weight is added to the platform. In practice, our rather overweight robot sees its visibility reduced to as little as a 2-5 meters and takes 1-2 seconds to respond to commands, and the situation is notably worse when traversing slopes. We deal with these issues by using 3D data for localization and low-level navigation, on one hand, and by implementing a loose navigation scheme on the other. See the paper for further details.</p>
+
+	<div class="image">
+		<img src="img/tibidabo_web.jpg" alt="IMAGE:TIBI AND DABO" />
+		<p>Left: Tibi (left) facing Dabo (right). Right: on-board devices.</p>
+	</div>
+
+	<p>Our navigation framework is diagrammed in the figure below. It is divided in four blocks, in decreasing level of abstraction: path planning, path execution, localization, and obstacle avoidance. The latter integrates three components: traversability inference, local planning and motion control. The robots receive <i>go-to</i> requests in XY global map coordinates, or semantic requests linked to coordinates (i.e. take me to (25,11), or pick me up in the cafeteria, which happens to be at (50,50)). The path planning module is executed typically one per <i>go-to</i> request, and finds a path from the robot's current position to the goal, as a set of waypoints. The other blocks make up two control loops. The obstacle avoidance is a <b>reactive loop</b>, and its mission is to get to the robot to a local goal (that is, in robot coordinates) using the laser scans to avoid static and dynamic obstacles. To do this, we use a RRT-based local planner and a motion control based on the Dynamic Window approach. The localization algorithm keeps track of the robot's position in the map using a 3D map-based particle filter. The localization estimate is then used by the path execution algorithm to transform the global waypoints computed by path planning into robot coordinates, which are sent to the obstacle avoidance module, thus closing the <b>deliberative loop</b>.</p>
+
+	<div class="image"><img src="img/loops.png" alt="IMAGE:LOOPS" /></div>
+
+	<p>This solution was tested in two different urban settings, the Campus setting and a very concurred, public avenue in the Gràcia district, also in Barcelona, Spain. Our results total over 6 km of autonomous navigation, with a success rate on <i>go-to</i> requests of nearly 99%, a marked improvement over previous, published efforts by the same team (Corominas, 2010). The results presented in the paper correspond to four experimental sessions, one in the Gràcia site, and three on the Campus site. Two videos document the session on Gràcia and the first session at the Campus, respectively. The Campus video features the experimental session in its entirety. Some segments are sped up to trim it down from over 18 minutes. The video at Gràcia is much shorter, but it highlights how our navigation framework can work in different environments with little to no prior in-site testing. Note the lack of clear features for localization and the presence of many pedestrians and bicyclists. The videos are available in <b>high definition</b> (see bottom bar).</p>
+
+	<div class="video">
+		<p style="text-align: center; font-weight: bold;">CAMPUS VIDEO (Second experimental session, June 3, 2010)</p>
+		<object type="application/x-shockwave-flash" style="width:600px; height:439px;" data="http://vimeo.com/moogaloop.swf?clip_id=87993038">
+			<param name="allowfullscreen" value="true" />
+			<param name="allowscriptaccess" value="always" />
+			<param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=87993038" />
+		</object>
+	</div>
+
+	<p>The full version (18 minutes) can be seen here: <a href="https://vimeo.com/87933959">part 1</a> and <a href="https://vimeo.com/87933960">part 2</a>.</p>
+
+	<div class="video">
+		<p style="text-align: center; font-weight: bold;">GRÀCIA VIDEO (First experimental session, May 20, 2010)</p>
+		<object type="application/x-shockwave-flash" style="width:600px; height:439px;" data="http://vimeo.com/moogaloop.swf?clip_id=87939302">
+			<param name="allowfullscreen" value="true" />
+			<param name="allowscriptaccess" value="always" />
+			<param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=87939302" />
+		</object>
+	</div>
+
+	<p>Some notes about the first video:</p>
+
+	<ul>
+		<li>At 1:09 the robot happens upon two students on a slope. The range for the front laser scanner is reduced to about 2 m, so the pedestrians are not seen until very close. The robot then attempts to break, which takes a very long time on a slope: this highlights the difficulties in implementing a responsive control algorithm for a two-wheeled robot with a high payload.</li>
+		<li>At 1:35 the robot gets to the square and turns too soon, due to the presence of a large floor-to-roof glass window. This happens after traversing a downwards ramp, where again 2D laser range data is severely impared, and so the localization estimate carries a large uncertainty. After regaining stability the estimate quickly converges to the robot's position.</li>
+		<li>At 3:28 the robot enters the square and tries to navigate around a tree base and a metal pole. There is more than enough room to the eye, but taking into account control issues such as illustrated in the first point, we use a relatively large clearance for safety (a circle of radius 1 m, for a footprint of a circle of radius 0.4 m). The robot takes too long to slow down, finds the base too close, stops, and enters recovery mode, allowing rotation only (see paper for details). It rotates to its left, as that's where the goal lies, and then to the right. When the tree base is outside the front laser's range, the robot moves forward and then successfully navigates between the obstacles.</li>
+		<li>The video ends with the robot facing a large section occupied by public works and failing to navigate around it. The map used for path planning does not contain these obstacles, and so the path obtained goes right through them and the low-level navigation component fails to find a way around it. To solve this situation, the robot should be able to explore the region, segment the obstacles, update the map, and request a new path, which lies beyond the scope of our work. We were aware of this fact and chose to get there anyway to illustrate the issue.</li>
+	</ul>
+
+	<p>For more information about the project, please refer to the <a href="http://urus.upc.edu/">URUS website</a>. Several videos are available, among them one documenting the demonstration at Gràcia (with URUS partner ETH Zürich and their SmartTer robot), which received TV coverage.</p>
+
+	<br />
+	<h2>References</h2>
+
+	<ul style="margin-left: 0; padding-left: 0; list-style-type:none;">
+		<li>[1] A. Corominas Murtra, E. Trulls Fortuny, O. Sandoval, J. Perez, D. Vasquez, J. M. Mirats Tur, M. Ferrer and A. Sanfeliu. Autonomous navigation for urban service mobile robots. IROS 2010.</li>
+		<li>[2] A. Corominas Murtra, E. Trulls Fortuny, J. M. Mirats Tur and A. Sanfeliu. Efficient use of 3d environment models for mobile robot simulation and localization. SIMPAR 2010. Also in <i>Lecture Notes in Computer Science</i>, 2010.</li>
+	</ul>
+
+</div>
+
+<div id="footer_spacer"></div>
+
+<div id="footer">
+	<div id="footer_contents">
+<div id="footer_left">&nbsp;</div>
+<div id="footer_right">
+	last updated: march 2014 &nbsp;/&nbsp;
+	<a href="../../index.html">home</a> &nbsp;/&nbsp;
+	<a href="http://validator.w3.org/check?uri=referer">validate</a>
+</div>
+<div class="clean"></div>
+	</div>
+</div>
+
+</body></html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<!-- thingies -->
+<title>Project proposal: Learning descriptors for image matchign</title>
+<meta http-equiv="content-language" content="en" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="keywords" content="eduard trulls, epfl, cvlab, robotics, autonomous navigation, iri, Institut de Robòtica, computer vision, machine learning, stereo, appearance descriptors, sift, deep learning, fracking" />
+<meta http-equiv="Pragma" content="no-cache" />
+<!--<link rel="icon" type="image/png" href="http://www.iri.upc.edu/images/common/favicon.png" />-->
+<!--<link rel="shortcut icon" href="http://www.iri.upc.edu/images/common/favicon.png" />-->
+
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="../../../css/style.css" />
+
+<!-- google fonts-->
+<!--<link href='http://fonts.googleapis.com/css?family=Gentium+Book+Basic' rel='stylesheet' type='text/css' />-->
+<!--<link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css' />-->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css' />
+
+<!-- analytics stuff -->
+<script type="text/javascript">
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-8343600-2']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+ var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ })();
+
+</script>
+</head>
+
+<body style="margin-top: 0; padding-top: 0;">
+
+<div id="content">
+	<div style="width: 100%; font-size: 2.5em; font-weight: bold; line-height:120%;">Learning descriptors for wide-baseline matching</div>
+	<div style="width: 100%; font-size: 1em; font-weight: normal; line-height:120%; margin-top: .5em;">Student project @ <a href="http://cvlab.epfl.ch/">EPFL Computer Vision Lab</a>, Fall semester 2018.</div>
+	
+	<!--<div style="clear: both;"></div>-->
+
+	<p></p>
+
+	<div style="width: 100%; margin: 2em 0">
+			<img style="height: 250px;" src="florence.jpg" alt="[img]" />
+			<img style="height: 250px;" src="milan" alt="[img]" />
+	</div>
+
+	<div style="width: 100%; font-size: 1.5em; font-weight: bold">Description</div>
+
+	<p>Local features are one of the fundamental building blocks in Computer Vision, as they provide tools to reliably find and describe local image regions. With the emergence of SIFT [3], they became the <i>de facto</i> standard to match images across wide baselines, and remain very effective solutions for e.g. camera pose estimation, 3D reconstruction, image stitching or visual SLAM. They have been the subject of vast amounts of research over the years.</p>
+
+	<p>Until recently, the best-performing and more reliable methods were built on carefully hand-crafted solutions. Over the past few years, most traditional Computer Vision techniques have been superseded by modern methods based in Machine Learning, and deep networks in particular. However, most deep learning solutions are dense, i.e. process the entire image at once, and these architectures are not directly applicable to keypoint learning, which consists of a pipeline with multiple, distinct components.</p>
+	 
+	<p>The Computer Vision lab at EPFL has introduced multiple works in this direction over the previous years (see references). LIFT [1] was the first fully-differentiable architecture for local feature learning. Its successor, LF-Net [2], bypassed some its limitations and allows us to train directly from images rather than patches. However, the modules they are both built from are relatively straightforward networks we had had success with in the past, and more powerful and discriminative solutions are bound to exist.</p>
+
+	<p>In this project, the candidate will investigate alternative formulations for the descriptor network, with the goal of boosting their invariance against geometric and photometric transformations, and in turn improve the performance of the entire pipeline. Ideally, the candidate will build on <a href="https://github.com/vcg-uvic/lf-net-release">our existing framework</a> and leverage in-house datasets. For further details, please contact us directly.</p>
+
+	<p style="font-weight: bold;">References:</p>
+
+	<ul style="list-style: none; margin-left: 0; padding-left: 0;">
+		<li>[1] <a href="https://arxiv.org/abs/1805.09662">LF-Net: Learning Local Features from Images</a>. Y. Ono, E. Trulls, P. Fua, K.M. Yi, arXiv:1805.09662, 2018.</li>
+		<li>[2] <a href="https://icwww.epfl.ch/~trulls/pdf/eccv16-lift.pdf">LIFT: Learned Invariant Feature Transform</a>. K.M. Yi, E. Trulls, V. Lepetit, P. Fua, ECCV 2016.</li>
+		<li>[3] <a href="https://www.cs.ubc.ca/~lowe/papers/ijcv04.pdf">Distinctive image features from scale-invariant keypoints</a>. D.G. Lowe, IJCV 2004.</li>
+	</ul>
+
+	<p>For other projects available at the Computer Vision Lab, please visit <a href="https://cvlab.epfl.ch/projects">our website</a>.</p>
+
+	<div style="width: 100%; font-size: 1.5em; font-weight: bold">Details</div>
+
+	<p>This project is aimed at first-year PhD students, but MSc students will be taken under consideration. The candidate should have programming experience in Python. Previous experience with Computer Vision, Machine Learning, and libraries such as Tensorflow or Pytorch would be a big plus. The project is 30% theory, 30% implementation and 40% experimentation.</p>
+
+
+	<div style="width: 100%; font-size: 1.5em; font-weight: bold">Contact</div>
+
+	<p>For further information, please send us an e-mail:</p>
+
+	<ul>
+		<li><a href="https://icwww.epfl.ch/~trulls/">Eduard Trulls</a>: eduard (dot) trulls (at) epfl (dot) ch, EPFL-IC-CVLab, <a href="https://plan.epfl.ch/?room=BC300">BC300</a>.</li>
+		<li><a href="https://vision.uvic.ca/people/kmyi/">Kwang Yi</a>: kyi (at) uvic (dot) ca, ESC612, University of Victoria, Canada.</li>
+	</ul>
+
+	<p style="height: 5em;"></p>
+
+</div>
+</body></html>

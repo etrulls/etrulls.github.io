@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<!-- thingies -->
+<title>Project proposal: World-wide Image Localization</title>
+<meta http-equiv="content-language" content="en" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="keywords" content="eduard trulls, epfl, cvlab, robotics, autonomous navigation, iri, Institut de Robòtica, computer vision, machine learning, stereo, appearance descriptors, sift, deep learning, fracking" />
+<meta http-equiv="Pragma" content="no-cache" />
+<!--<link rel="icon" type="image/png" href="http://www.iri.upc.edu/images/common/favicon.png" />-->
+<!--<link rel="shortcut icon" href="http://www.iri.upc.edu/images/common/favicon.png" />-->
+
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+<!-- google fonts-->
+<!--<link href='http://fonts.googleapis.com/css?family=Gentium+Book+Basic' rel='stylesheet' type='text/css' />-->
+<!--<link href='http://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css' />-->
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css' />
+
+<!-- analytics stuff -->
+<script type="text/javascript">
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-8343600-2']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+ var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ })();
+
+</script>
+</head>
+
+<body style="margin-top: 0; padding-top: 0;">
+
+<div id="content">
+	<div style="padding: 1em 0em 2em 0em; margin-right: 4em; text-align: left;">
+		<img style="height: 20px; padding-bottom: 9px; padding-right: 10px;" src="epfl.svg" alt="[img]" />
+		<img style="height: 30px;" src="google.png" alt="[img]" />
+	</div>
+
+	<div style="width: 100%; font-size: 2.5em; font-weight: bold; line-height:120%;">World-wide Image Localization</div>
+	<div style="width: 100%; font-size: 1em; font-weight: normal; line-height:120%; margin-top: .5em;">Student project: <a href="http://cvlab.epfl.ch/">EPFL Computer Vision Lab</a>, Fall semester 2019.</div>
+	
+	<!--<div style="clear: both;"></div>-->
+
+	<p></p>
+
+	<div style="width: 100%; margin: 2em 0; text-align: center;">
+			<!--<img style="height: 250px;" src="florence.jpg" alt="[img]" />-->
+			<!--<img style="height: 250px;" src="milan" alt="[img]" />-->
+			<img style="height: 220px;" src="canvas_brandenburg_gate.jpg" alt="[img]" /><br/>
+			<img style="height: 250px;" src="bgate.png" alt="[img]" />
+	</div>
+
+	<div style="width: 100%; font-size: 1.5em; font-weight: bold">Description</div>
+
+	<p>In this project we want to tackle one of the fundamental problems in Computer Vision: finding the precise location where an image was taken. Given an image and a representation of the world, the goal is to find the exact position and orientation of the viewer, which is crucial to enable applications such as Augmented Reality (AR). This is a very challenging problem due to large differences in viewpoint and illumination, partial occlusions, and its sheer scale.</p>
+
+	<p>Most Computer Vision problems, such as object detection, human pose estimation, or segmentation, are currently dominated by learned solutions: specifically, dense convolutional neural networks which process entire images, and produce per-pixel estimates. However, general pose estimation remains an outlier due to its unconstrained nature, and the state of the art solutions still rely on local features, which allow us to establish correspondences between images and then use them to estimate the pose.</p>
+
+	<p>Historically, this has been done with hand-crafted features, such as SIFT [1]. There is, however, a large margin for improvement in this area. The Computer Vision lab at EPFL has pioneered multiple works in this direction over the past few years [2,3]. In this project, we will build on this work, leveraging our existing frameworks and in-house datasets, identify failure cases in real-world settings, and find ways to solve them by exploiting additional cues, such as depth data or semantics.</p>
+
+	<p style="font-weight: bold;">References:</p>
+
+	<ul style="list-style: none; margin-left: 0; padding-left: 0;">
+		<li>[1] <a href="https://www.cs.ubc.ca/~lowe/papers/ijcv04.pdf">Distinctive image features from scale-invariant keypoints</a>. D.G. Lowe. In IJCV, 2004.</li>
+		<li>[2] <a href="https://icwww.epfl.ch/~trulls/pdf/eccv16-lift.pdf">LIFT: Learned Invariant Feature Transform</a>. K.M. Yi, E. Trulls, V. Lepetit, P. Fua. In ECCV, 2016.</li>
+		<li>[3] <a href="https://arxiv.org/abs/1805.09662">LF-Net: Learning Local Features from Images</a>. Y. Ono, E. Trulls, P. Fua, K.M. Yi. In NeurIPS, 2018</li>
+	</ul>
+
+	<p>For other projects available at the Computer Vision Lab, please visit <a href="https://cvlab.epfl.ch/projects">our website</a>.</p>
+
+	<div style="width: 100%; font-size: 1.5em; font-weight: bold">Details</div>
+
+	<p>This project is a collaboration with Google Zurich. It is aimed at first-year PhD students. The candidate should be proficient in Python. Experience with Computer Vision, Machine Learning, and libraries such as Pytorch or Tensorflow is a plus. The project is 30% theory, 30% implementation and 40% experimentation.</p>
+
+	<div style="width: 100%; font-size: 1.5em; font-weight: bold">Contact</div>
+
+	<p>For further information, please send us an e-mail:</p>
+
+	<ul>
+		<li><a href="https://icwww.epfl.ch/~trulls/">Eduard Trulls</a>: eduard.trulls (at) epfl.ch</li>
+		<li><a href="https://people.epfl.ch/pascal.fua/bio?lang=en">Prof. Pascal Fua</a>: pascal.fua (at) epfl.ch</li>
+	</ul>
+
+	<p style="height: 5em;"></p>
+
+</div>
+</body></html>

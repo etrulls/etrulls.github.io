@@ -1,5 +1,5 @@
 html, body {
-	font-family: "roboto", "pt sans", sans-serif;
+	font-family: "Roboto", "PT sans", sans-serif;
 	font-size: .95em;
 	color: #111;
 	padding: 0;
@@ -27,7 +27,7 @@ html, body {
 	display: inline-block;
 	width: 800px;
 	text-align: left;
-	font-family: "lora", serif;
+	font-family: "Lora", serif;
 	font-weight: bold;
 	color: white;
 }
